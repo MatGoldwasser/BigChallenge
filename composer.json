@@ -17,6 +17,7 @@
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
+        "nunomaduro/larastan": "^2.0",
         "phpunit/phpunit": "^9.5.10",
         "spatie/laravel-ignition": "^1.0",
         "worksome/coding-style": "^0.28.0"
@@ -34,7 +35,7 @@
         }
     },
     "scripts": {
-        
+
         "phpcs": "vendor/bin/phpcs",
         "php-cs-fixer": "vendor/bin/php-cs-fixer fix --ansi",
         "php-cs-fixer-ci": "vendor/bin/php-cs-fixer fix --dry-run --ansi",
