@@ -10,30 +10,30 @@ class RegisterUserTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_register_success()
+    public function testRegisterSuccess()
     {
         $this->postJson('/api/register', [
-            'name'=>'Mateo',
+            'name' => 'Mateo',
             'email' => 'mateo@hotmail.com',
             'password' => '123456789mm',
             'password_confirmation' => '123456789mm'
         ])->assertSuccessful();
 
-        $this->assertDatabaseCount('users' ,1);
+        $this->assertDatabaseCount('users', 1);
     }
 
-    public function test_existing_email()
+    public function testExistingEmail()
     {
         User::factory()->create(['email' => 'mateo@hotmail.com']);
 
         $this->postJson('/api/register', [
-            'name'=>'Felipe',
+            'name' => 'Felipe',
             'email' => 'mateo@hotmail.com',
             'password' => '123456789',
             'password_confirmation' => '123456789'
         ])->assertStatus(422);
 
-        $this->assertDatabaseCount('users' ,1);
+        $this->assertDatabaseCount('users', 1);
     }
 
 
@@ -42,7 +42,7 @@ class RegisterUserTest extends TestCase
      * @dataProvider invalidInformationRegisterUser
      */
 
-    public function test_register_error_cases($data)
+    public function testRegisterErrorCases($data)
     {
         $this->postJson('/api/register', $data)->assertStatus(422);
     }
@@ -50,32 +50,32 @@ class RegisterUserTest extends TestCase
     public function invalidInformationRegisterUser()
     {
         return [
-            ['no name'=>[
-                'email'=>'British Hospital',
+            ['no name' => [
+                'email' => 'British Hospital',
                 'password' => 'mipassword123',
                 'password_confirmation' => 'mipassword123'
             ]],
-            ['numeric name'=>[
-                'name'=>'Felipe34',
-                'email'=>'juegoAlLol@gmail.com',
-                'password'=> 'lolismylife',
+            ['numeric name' => [
+                'name' => 'Felipe34',
+                'email' => 'juegoAlLol@gmail.com',
+                'password' => 'lolismylife',
                 'password_confirmation' => 'lolismylife'
             ]],
-            ['no email'=>[
-                'name'=>'Felipe34',
-                'password'=> 'lolismylife',
+            ['no email' => [
+                'name' => 'Felipe34',
+                'password' => 'lolismylife',
                 'password_confirmation' => 'lolismylife'
             ]],
-            ['email not valid'=>[
-                'name'=>'Felipe34',
-                'email'=>'estoNoEsUnMail',
-                'password'=> 'lolismylife',
+            ['email not valid' => [
+                'name' => 'Felipe34',
+                'email' => 'estoNoEsUnMail',
+                'password' => 'lolismylife',
                 'password_confirmation' => 'lolismylife'
             ]],
-            ['incorrect confirmed password'=>[
-                'name'=>'Felipe34',
-                'email'=>'juegoAlLol@gmail.com',
-                'password'=> 'password1',
+            ['incorrect confirmed password' => [
+                'name' => 'Felipe34',
+                'email' => 'juegoAlLol@gmail.com',
+                'password' => 'password1',
                 'password_confirmation' => 'password2'
             ]]
         ];
