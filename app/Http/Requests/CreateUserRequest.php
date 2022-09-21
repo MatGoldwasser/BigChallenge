@@ -13,7 +13,6 @@ class CreateUserRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
             'name' => 'required|alpha',
             'email' => 'required|email:strict|unique:users,email',
