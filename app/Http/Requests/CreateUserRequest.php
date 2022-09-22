@@ -11,7 +11,7 @@ class CreateUserRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules():array
+    public function rules(): array
     {
         return [
             'name' => 'required|alpha',
