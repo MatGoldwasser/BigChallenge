@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
-class LoginUserCase extends TestCase
+class LoginUserTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -26,30 +26,30 @@ class LoginUserCase extends TestCase
         ])->assertSuccessful();
     }
 
-    public function testWrongPassword()
-    {
-        User::factory()->create([
-            'email' => 'felipe@gmail.com',
-            'password' => Hash::make('lightit123')
-        ]);
+    /**
+     * @dataProvider invalidInformationLoginUser
+     */
 
-        $this->postJson('/api/login', [
-            'email' => 'felipe@gmail.com',
-            'password' => 'estaTodoMal',
-            'password_confirmation' => 'estaTodoMal'
-        ])->assertStatus(401);
-    }
-
-    public function testNoPassword()
+    public function testLoginErrorCases($data)
     {
         User::factory()->create([
             'email' => 'juan@gmail.com',
             'password' => Hash::make('password123')
         ]);
 
-        $this->postJson('/api/login', [
-            'email' => 'juan@gmail.com',
-        ])->assertStatus(422);
+        $this->postJson('/api/login', $data)->assertStatus(422);
+    }
+
+    public function invalidInformationLoginUser(){
+        return [
+            ['no email' =>[
+                'password' => 'PASSWORD123',
+                'password_confirmation' => 'PASSWORD123'
+            ]],
+            ['no password' => [
+                'email' => 'jorge@hotmail.com'
+            ]]
+        ];
     }
 
     public function testAlreadyLoggedIn()
@@ -65,6 +65,20 @@ class LoginUserCase extends TestCase
             'email' => 'otroEmail@gmail.com',
             'password' => 'password123',
             'password_confirmation' => 'password123'
+        ])->assertStatus(401);
+    }
+
+    public function testWrongPassword()
+    {
+        User::factory()->create([
+            'email' => 'felipe@gmail.com',
+            'password' => Hash::make('lightit123')
+        ]);
+
+        $this->postJson('/api/login', [
+            'email' => 'felipe@gmail.com',
+            'password' => 'estaTodoMal',
+            'password_confirmation' => 'estaTodoMal'
         ])->assertStatus(401);
     }
 }
