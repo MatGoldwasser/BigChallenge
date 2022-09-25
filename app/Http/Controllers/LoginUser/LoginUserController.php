@@ -5,7 +5,8 @@ namespace App\Http\Controllers\LoginUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginUserRequest;
 use App\Models\User;
-use Illuminate\Http\Response;
+use App\Transformers\UserTransformer;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 
 class LoginUserController extends Controller
@@ -17,14 +18,14 @@ class LoginUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(LoginUserRequest $request)
+    public function __invoke(LoginUserRequest $request):JsonResponse
     {
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response('Login invalid', Response::HTTP_UNAUTHORIZED);
+            return responder()->error()->respond(401, ['message' => 'Login invalid']);
         }
 
-        return $user->createToken($user->id)->plainTextToken;
+        return responder()->success($user, UserTransformer::class)->respond();
     }
 }
