@@ -26,6 +26,7 @@ class LoginUserController extends Controller
             return responder()->error()->respond(401, ['message' => 'Login invalid']);
         }
 
+        $user->createToken($user->id);
         return responder()->success($user, UserTransformer::class)->respond();
     }
 }

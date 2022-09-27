@@ -33,8 +33,7 @@ class UserTransformer extends Transformer
             'id' => (int) $user->id,
             'name' => $user->name,
             'email' => $user->email,
-            'password' => $user->password,
-            'token' => $user->createToken($user->id)->plainTextToken
+            'password' => $user->password
         ];
     }
 }
