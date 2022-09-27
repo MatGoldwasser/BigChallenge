@@ -63,9 +63,8 @@ class LoginUserTest extends TestCase
         );
 
         $this->postJson('/api/login', [
-            'email' => 'otroEmail@gmail.com',
-            'password' => 'password123',
-            'password_confirmation' => 'password123'
+            'email' => 'prueba@gmail.com',
+            'password' => 'password1'
         ])->assertStatus(401);
     }
 
@@ -78,8 +77,7 @@ class LoginUserTest extends TestCase
 
         $this->postJson('/api/login', [
             'email' => 'felipe@gmail.com',
-            'password' => 'estaTodoMal',
-            'password_confirmation' => 'estaTodoMal'
+            'password' => 'estaTodoMal'
         ])->assertStatus(401);
     }
 }
