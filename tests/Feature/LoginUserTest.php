@@ -40,9 +40,10 @@ class LoginUserTest extends TestCase
         $this->postJson('/api/login', $data)->assertStatus(422);
     }
 
-    public function invalidInformationLoginUser(){
+    public function invalidInformationLoginUser()
+    {
         return [
-            ['no email' =>[
+            ['no email' => [
                 'password' => 'PASSWORD123',
                 'password_confirmation' => 'PASSWORD123'
             ]],

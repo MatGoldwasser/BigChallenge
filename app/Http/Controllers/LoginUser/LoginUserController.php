@@ -18,7 +18,7 @@ class LoginUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(LoginUserRequest $request):JsonResponse
+    public function __invoke(LoginUserRequest $request): JsonResponse
     {
         $user = User::where('email', $request->email)->first();
 
@@ -26,6 +26,7 @@ class LoginUserController extends Controller
             return responder()->error()->respond(401, ['message' => 'Login invalid']);
         }
 
+        $user->createToken($user->id);
         return responder()->success($user, UserTransformer::class)->respond();
     }
 }

@@ -24,17 +24,16 @@ class UserTransformer extends Transformer
     /**
      * Transform the model.
      *
-     * @param  \App\Models\User $user
+     * @param \App\Models\User $user
+     *
      * @return array
      */
-    public function transform(User $user):array
+    public function transform(User $user): array
     {
         return [
             'id' => (int) $user->id,
             'name' => $user->name,
-            'email' => $user->email,
-            'password' => $user->password,
-            'token' => $user->createToken($user->id)->plainTextToken
+            'email' => $user->email
         ];
     }
 }
