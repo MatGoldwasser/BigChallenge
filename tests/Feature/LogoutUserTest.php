@@ -21,7 +21,7 @@ class LogoutUserTest extends TestCase
             ])
         );
 
-        $this->postJson('/api/logout', $user->toArray())->assertSuccessful();
+        $this->postJson('/api/logout')->assertSuccessful();
     }
 
     public function testLogoutWithoutBeingLoggedIn()
