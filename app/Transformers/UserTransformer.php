@@ -24,10 +24,11 @@ class UserTransformer extends Transformer
     /**
      * Transform the model.
      *
-     * @param  \App\Models\User $user
+     * @param \App\Models\User $user
+     *
      * @return array
      */
-    public function transform(User $user):array
+    public function transform(User $user): array
     {
         return [
             'id' => (int) $user->id,
