@@ -16,7 +16,7 @@ class RedirectIfAuthenticated
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @param string|null ...$guards
      *
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
     public function handle(Request $request, Closure $next, ...$guards)
     {
@@ -24,7 +24,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                return responder()->error()->respond(403, ['message' => 'Already logged in']);
             }
         }
 

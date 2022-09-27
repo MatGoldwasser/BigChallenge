@@ -65,7 +65,7 @@ class LoginUserTest extends TestCase
         $this->postJson('/api/login', [
             'email' => 'prueba@gmail.com',
             'password' => 'password1'
-        ])->assertStatus(401);
+        ])->assertStatus(403);
     }
 
     public function testWrongPassword()
