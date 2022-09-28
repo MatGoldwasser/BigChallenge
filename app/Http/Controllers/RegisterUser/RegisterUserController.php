@@ -7,16 +7,26 @@ use App\Http\Requests\CreateUserRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class RegisterUserController extends Controller
 {
     public function __invoke(CreateUserRequest $request): JsonResponse
     {
-        User::create([
+
+      $user =  User::create([
            'name' => $request->name,
            'email' => $request->email,
            'password' => Hash::make($request->password)
         ]);
+
+      if($request->role == 'Doctor'){
+          $user->assignRole('Doctor');
+      }
+      else{
+          $user->assignRole('Patient');
+      }
 
         return response()->json([
             'message' => 'User successfully created'
