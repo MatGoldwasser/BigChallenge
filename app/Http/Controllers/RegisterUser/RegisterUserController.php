@@ -21,12 +21,7 @@ class RegisterUserController extends Controller
            'password' => Hash::make($request->password)
         ]);
 
-      if($request->role == 'Doctor'){
-          $user->assignRole('Doctor');
-      }
-      else{
-          $user->assignRole('Patient');
-      }
+        $user->assignRole($request->role);
 
         return response()->json([
             'message' => 'User successfully created'

@@ -31,13 +31,11 @@ class PermissionSeeder extends Seeder
         ];
 
         foreach ($permissions as $permission){
-            Permission::create([
-                'name' => $permission
-            ]);
+            Permission::findOrCreate($permission);
         }
 
-        $doctor = Role::create(['name' => 'Doctor']);
-       $patient = Role::create(['name' => 'Patient']);
+        $doctor = Role::findOrCreate('Doctor');
+       $patient = Role::findOrCreate('Patient');
 
        $doctorPermissions = [
            'view_patients_submissions_doctor_view',
