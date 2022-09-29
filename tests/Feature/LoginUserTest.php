@@ -21,8 +21,7 @@ class LoginUserTest extends TestCase
 
         $this->postJson('/api/login', [
             'email' => 'gian@gmail.com',
-            'password' => '123456789',
-            'password_confirmation' => '123456789'
+            'password' => '123456789'
         ])->assertSuccessful();
     }
 
@@ -44,8 +43,7 @@ class LoginUserTest extends TestCase
     {
         return [
             ['no email' => [
-                'password' => 'PASSWORD123',
-                'password_confirmation' => 'PASSWORD123'
+                'password' => 'PASSWORD123'
             ]],
             ['no password' => [
                 'email' => 'jorge@hotmail.com'

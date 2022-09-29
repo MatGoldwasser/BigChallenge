@@ -3,6 +3,7 @@
 use App\Http\Controllers\LoginUser\LoginUserController;
 use App\Http\Controllers\LogoutUser\LogoutUserController;
 use App\Http\Controllers\RegisterUser\RegisterUserController;
+use App\Http\Controllers\Submissions\SubmissionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,3 +29,5 @@ Route::post('/register', RegisterUserController::class);
 Route::post('/login', LoginUserController::class)->middleware(['guest']);
 
 Route::post('/logout', LogoutUserController::class)->middleware(['auth:sanctum']);
+
+Route::post('/submission', SubmissionController::class)->middleware(['auth:sanctum', 'role:Patient']);
