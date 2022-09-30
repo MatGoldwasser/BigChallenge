@@ -17,7 +17,6 @@ class SubmissionRequest extends FormRequest
         return [
             'title' => 'required',
             'symptoms' => 'required',
-            'other_info' => 'required',
             'phone' => 'required'
         ];
     }
