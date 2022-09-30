@@ -6,18 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SubmissionRequest;
 use App\Models\Submission;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class SubmissionController extends Controller
 {
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(SubmissionRequest $request):JsonResponse
+    public function __invoke(SubmissionRequest $request): JsonResponse
     {
         Submission::create([
             'title' => $request->title,
@@ -27,7 +26,5 @@ class SubmissionController extends Controller
         ]);
 
         return responder()->success()->respond(200, ['message' => 'Success']);
-
-
     }
 }

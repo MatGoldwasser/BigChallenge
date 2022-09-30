@@ -5,9 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use Database\Seeders\PermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class SubmissionTest extends TestCase
@@ -17,7 +15,7 @@ class SubmissionTest extends TestCase
     public function testSubmissionSuccess()
     {
 
-        (new PermissionSeeder)->run();
+        (new PermissionSeeder())->run();
 
         Sanctum::actingAs(
             $user = User::factory()->create([
@@ -35,12 +33,11 @@ class SubmissionTest extends TestCase
             'other_info' => fake()->text,
             'phone' => fake()->phoneNumber
         ])->assertSuccessful();
-
     }
 
     public function testDoctorSubmission()
     {
-        (new PermissionSeeder)->run();
+        (new PermissionSeeder())->run();
 
         Sanctum::actingAs(
             $user = User::factory()->create([
@@ -66,7 +63,7 @@ class SubmissionTest extends TestCase
 
     public function testSubmissionErrorCases($data)
     {
-        (new PermissionSeeder)->run();
+        (new PermissionSeeder())->run();
 
         Sanctum::actingAs(
             $user = User::factory()->create([
@@ -80,8 +77,7 @@ class SubmissionTest extends TestCase
         $this->postJson('/api/submission', $data)->assertStatus(401);
     }
 
-
-    public function invalidInformationSubmission():array
+    public function invalidInformationSubmission(): array
     {
         return [
           ['no title' => [

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\LogoutUser;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
