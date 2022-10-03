@@ -12,13 +12,7 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginUserController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function __invoke(LoginUserRequest $request): JsonResponse
     {
         if (!Auth::check()) {
@@ -28,7 +22,7 @@ class LoginUserController extends Controller
                 return responder()->error()->respond(401, ['message' => 'Login invalid']);
             }
 
-            $user->createToken($user->id);
+            $user->createToken('token-'.$user->id);
             return responder()->success($user, UserTransformer::class)->respond();
         }
 
