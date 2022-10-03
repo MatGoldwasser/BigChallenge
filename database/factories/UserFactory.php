@@ -2,14 +2,20 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Spatie\Permission\Exceptions\RoleAlreadyExists;
+use Spatie\Permission\Models\Role;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
 class UserFactory extends Factory
 {
+    private $type;
+
     /**
      * Define the model's default state.
      *
@@ -37,4 +43,39 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+
+
+    public function patient()
+    {
+        $role = 'Patient';
+        return $this->afterCreating(function (User $user) use ($role) {
+                try{
+                    Role::create([
+                        'name' => $role
+                    ]);
+                }
+                catch(RoleAlreadyExists $e){
+
+                }
+                $user->assignRole($role);
+        });
+    }
+
+    public function doctor()
+    {
+        $role = 'Doctor';
+        return $this->afterCreating(function (User $user) use ($role) {
+            try{
+                Role::create([
+                    'name' => $role
+                ]);
+            }
+            catch(RoleAlreadyExists $e){
+
+            }
+            $user->assignRole($role);
+        });
+    }
+
 }

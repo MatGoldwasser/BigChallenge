@@ -14,17 +14,9 @@ class SubmissionTest extends TestCase
 
     public function testSubmissionSuccess()
     {
-
-        (new PermissionSeeder())->run();
-
         Sanctum::actingAs(
-            $user = User::factory()->create([
-                'email' => 'felipe@gmail.com',
-                'password' => 'password123'
-            ])
+          $user =  User::factory()->patient()->create()
         );
-
-        $user->assignRole('Patient');
 
 
         $this->postJson('/api/submission', [
@@ -37,17 +29,9 @@ class SubmissionTest extends TestCase
 
     public function testDoctorSubmission()
     {
-        (new PermissionSeeder())->run();
-
         Sanctum::actingAs(
-            $user = User::factory()->create([
-                'email' => 'felipe@gmail.com',
-                'password' => 'password123'
-            ])
+            $user = User::factory()->doctor()->create()
         );
-
-        $user->assignRole('Doctor');
-
 
         $this->postJson('/api/submission', [
             'title' => 'Back pain',
@@ -57,38 +41,31 @@ class SubmissionTest extends TestCase
         ])->assertStatus(403);
     }
 
+
     /**
      * @dataProvider invalidInformationSubmission
      */
-
     public function testSubmissionErrorCases($data)
     {
-        (new PermissionSeeder())->run();
-
         Sanctum::actingAs(
-            $user = User::factory()->create([
-                'email' => 'felipe@gmail.com',
-                'password' => 'password123'
-            ])
+            $user = User::factory()->patient()->create()
         );
 
-        $user->assignRole('Patient');
-
-        $this->postJson('/api/submission', $data)->assertStatus(401);
+        $this->postJson('/api/submission', $data)->assertStatus(422);
     }
 
-    public function invalidInformationSubmission(): array
+    public function invalidInformationSubmission()
     {
         return [
-          ['no title' => [
-              'symptoms' => fake()->text,
-              'other_info' => fake()->text,
-              'phone' => fake()->phoneNumber
-          ]],
+            ['no title' => [
+              'symptoms' => 'symptoms',
+              'other_info' => 'text',
+              'phone' => '099123034'
+            ]],
             ['no symptoms' => [
                 'title' => 'Headache',
-                'other_info' => fake()->text,
-                'phone' => fake()->phoneNumber
+                'other_info' => 'Nothing',
+                'phone' => '098554738'
             ]],
             ['no data' => [
 
