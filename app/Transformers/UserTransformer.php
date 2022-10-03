@@ -17,7 +17,7 @@ class UserTransformer extends Transformer
     /**
      * List of autoloaded default relations.
      *
-     * @var array
+     * @var array<mixed>
      */
     protected $load = [];
 
@@ -26,7 +26,7 @@ class UserTransformer extends Transformer
      *
      * @param \App\Models\User $user
      *
-     * @return array
+     * @return array<mixed>
      */
     public function transform(User $user): array
     {

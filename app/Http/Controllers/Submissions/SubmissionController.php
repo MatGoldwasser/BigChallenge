@@ -8,7 +8,6 @@ use Illuminate\Http\JsonResponse;
 
 class SubmissionController
 {
-
     public function __invoke(SubmissionRequest $request): JsonResponse
     {
         $submission = Submission::create([

@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use Database\Seeders\PermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
@@ -15,7 +14,7 @@ class SubmissionTest extends TestCase
     public function testSubmissionSuccess()
     {
         Sanctum::actingAs(
-          $user =  User::factory()->patient()->create()
+            $user =  User::factory()->patient()->create()
         );
 
 
@@ -40,7 +39,6 @@ class SubmissionTest extends TestCase
             'phone' => fake()->phoneNumber
         ])->assertStatus(403);
     }
-
 
     /**
      * @dataProvider invalidInformationSubmission
