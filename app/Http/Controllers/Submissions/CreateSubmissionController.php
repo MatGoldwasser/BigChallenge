@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers\Submissions;
 
-use App\Http\Requests\SubmissionRequest;
+use App\Http\Requests\CreateSubmissionRequest;
 use App\Models\Submission;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
-class SubmissionController
+class CreateSubmissionController
 {
-    public function __invoke(SubmissionRequest $request): JsonResponse
+    public function __invoke(CreateSubmissionRequest $request): JsonResponse
     {
         $submission = Submission::create([
             'title' => $request->title,
             'symptoms' => $request->symptoms,
             'other_info' => $request->other_info,
-            'phone' => $request->phone
+            'phone' => $request->phone,
+            'status' => $request->status,
+            'patient_id' => Auth::user()
         ]);
 
         return responder()->success()->respond(200, [
