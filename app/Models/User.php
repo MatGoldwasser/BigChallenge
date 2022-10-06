@@ -17,6 +17,12 @@ class User extends Authenticatable
     use HasFactory;
     use Notifiable;
 
+
+    /**
+     *
+     *
+     * @var string
+     */
     protected $guard_name = 'sanctum';
 
     /**

@@ -24,7 +24,8 @@ class SubmissionTransformer extends Transformer
     /**
      * Transform the model.
      *
-     * @param  \App\Models\Submission $submission
+     * @param \App\Models\Submission $submission
+     *
      * @return array<mixed>
      */
     public function transform(Submission $submission): array
