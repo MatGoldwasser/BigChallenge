@@ -17,6 +17,14 @@ class User extends Authenticatable
     use HasFactory;
     use Notifiable;
 
+
+    /**
+     *
+     *
+     * @var string
+     */
+    protected $guard_name = 'sanctum';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -49,6 +57,12 @@ class User extends Authenticatable
 
     public function submissions(): HasMany
     {
-        return $this->hasMany(Submission::class);
+        $id = $this->hasRole('Patient') ? 'patient_id' : 'doctor_id';
+
+        if ($this->hasRole('Patient')) {
+            return $this->hasMany(Submission::class, 'patient_id');
+        }
+
+        return $this->hasMany(Submission::class, 'doctor_id')->orWhereNull('doctor_id');
     }
 }

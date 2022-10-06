@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class SubmissionRequest extends FormRequest
+class CreateSubmissionRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -16,7 +17,8 @@ class SubmissionRequest extends FormRequest
         return [
             'title' => 'required',
             'symptoms' => 'required',
-            'phone' => 'required'
+            'phone' => 'required',
+            'status' => Rule::in(['Pending', 'In progress' , 'Done'])
         ];
     }
 }

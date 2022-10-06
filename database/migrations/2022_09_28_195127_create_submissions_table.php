@@ -15,10 +15,13 @@ return new class extends Migration
     {
         Schema::create('submissions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('doctor_id')->nullable()->constrained('users');
+            $table->foreignId('patient_id')->constrained('users');
             $table->string('title');
             $table->text('symptoms');
             $table->text('other_info');
             $table->string('phone');
+            $table->string('status');
             $table->timestamps();
         });
     }

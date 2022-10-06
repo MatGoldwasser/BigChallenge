@@ -50,14 +50,10 @@ class UserFactory extends Factory
     {
         $role = 'Patient';
         return $this->afterCreating(function (User $user) use ($role) {
-                try{
-                    Role::create([
-                        'name' => $role
+                    $role = Role::firstOrCreate([
+                        'name' => $role,
+                        'guard_name' => 'sanctum'
                     ]);
-                }
-                catch(RoleAlreadyExists $e){
-
-                }
                 $user->assignRole($role);
         });
     }
@@ -66,14 +62,10 @@ class UserFactory extends Factory
     {
         $role = 'Doctor';
         return $this->afterCreating(function (User $user) use ($role) {
-            try{
-                Role::create([
-                    'name' => $role
-                ]);
-            }
-            catch(RoleAlreadyExists $e){
-
-            }
+            $role = Role::firstOrCreate([
+                'name' => $role,
+                'guard_name' => 'sanctum'
+            ]);
             $user->assignRole($role);
         });
     }
