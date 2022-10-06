@@ -6,7 +6,7 @@ use App\Transformers\SubmissionTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
-class GetSubmissionsController extends Controller
+class GetSubmissionsController
 {
     public function __invoke(): JsonResponse
     {
