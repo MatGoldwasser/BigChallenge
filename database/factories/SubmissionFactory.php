@@ -18,13 +18,13 @@ class SubmissionFactory extends Factory
     public function definition()
     {
         return [
-            'patient_id' => (User::factory()->patient()->create())->id,
+            'patient_id' => User::factory()->patient()->create(),
             'doctor_id' => null,
             'title' => fake()->text,
             'symptoms' => fake()->text,
             'other_info' => fake()->text,
             'phone' => fake()->phoneNumber,
-            'status' => fake()->randomElement(['Doctor', 'Patient'])
+            'status' => 'inProgress'
         ];
     }
 }

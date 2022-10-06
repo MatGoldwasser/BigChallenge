@@ -2,7 +2,7 @@
 
 namespace App\Transformers;
 
-use App\Submission;
+use App\Models\Submission;
 use Flugg\Responder\Transformers\Transformer;
 
 class SubmissionTransformer extends Transformer
@@ -24,7 +24,7 @@ class SubmissionTransformer extends Transformer
     /**
      * Transform the model.
      *
-     * @param  \App\Submission $submission
+     * @param  \App\Models\Submission $submission
      * @return array<mixed>
      */
     public function transform(Submission $submission): array
