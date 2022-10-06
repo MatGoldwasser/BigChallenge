@@ -4,16 +4,26 @@ namespace Tests\Feature;
 
 use App\Models\Submission;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class GetSubmissionsTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function testGetSubmissionsPatientSuccess()
     {
         Sanctum::actingAs(
-            $user = User::factory()->patient()->create()
+            $patient = User::factory()->patient()->create()
         );
+
+        Submission::factory([
+            'patient_id' => $patient
+        ])->create();
+
+        Submission::factory(5)->create();
+
 
         $this->getJson('/api/submissions')->assertSuccessful();
     }
