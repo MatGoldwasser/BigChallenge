@@ -5,24 +5,22 @@ namespace Tests\Feature;
 use App\Models\Submission;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class AssignSubmissionTest extends TestCase
 {
-
     use RefreshDatabase;
 
     public function testAssignSubmissionSuccess()
     {
         Sanctum::actingAs(
-           $doctor = User::factory()->doctor()->create()
+            $doctor = User::factory()->doctor()->create()
         );
 
         Submission::factory(10)->create();
         $sub = Submission::first();
-        $this->putJson('/api/submissions/'. $sub->id)->assertSuccessful();
+        $this->putJson('/api/submissions/' . $sub->id)->assertSuccessful();
     }
 
     public function testPatientAssignSubmission()
@@ -34,7 +32,7 @@ class AssignSubmissionTest extends TestCase
         Submission::factory(10)->create();
         $sub = Submission::first();
 
-        $this->putJson('/api/submissions/'. $sub->id)->assertStatus(403);
+        $this->putJson('/api/submissions/' . $sub->id)->assertStatus(403);
     }
 
     public function testAssignedDoctorSubmission()

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Submissions;
 use App\Http\Requests\CreateSubmissionRequest;
 use App\Models\Submission;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class CreateSubmissionController
 {

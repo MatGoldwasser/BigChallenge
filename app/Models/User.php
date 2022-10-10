@@ -17,7 +17,6 @@ class User extends Authenticatable
     use HasFactory;
     use Notifiable;
 
-
     /**
      *
      *
@@ -66,14 +65,13 @@ class User extends Authenticatable
         return $this->hasMany(Submission::class, 'doctor_id')->orWhereNull('doctor_id');
     }
 
-    public function doctor()
+    public function doctor(): bool
     {
         return $this->hasRole('Doctor');
     }
 
-    public function patient()
+    public function patient(): bool
     {
         return $this->hasRole('Patient');
     }
-
 }
