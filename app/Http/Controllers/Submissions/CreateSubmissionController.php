@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Submissions;
 use App\Http\Requests\CreateSubmissionRequest;
 use App\Models\Submission;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class CreateSubmissionController
 {
@@ -17,7 +16,7 @@ class CreateSubmissionController
             'other_info' => $request->other_info,
             'phone' => $request->phone,
             'status' => $request->status,
-            'patient_id' => $request->user() //Auth::user()
+            'patient_id' => $request->user()
         ]);
 
         return responder()->success()->respond(200, [

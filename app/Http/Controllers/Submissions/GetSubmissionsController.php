@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Submissions;
 
 use App\Transformers\SubmissionTransformer;
 use Illuminate\Http\JsonResponse;
