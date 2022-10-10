@@ -17,7 +17,7 @@ class CreateSubmissionController
             'other_info' => $request->other_info,
             'phone' => $request->phone,
             'status' => $request->status,
-            'patient_id' => $request->user() //Auth::user()
+            'patient_id' => $request->user()
         ]);
 
         return responder()->success()->respond(200, [

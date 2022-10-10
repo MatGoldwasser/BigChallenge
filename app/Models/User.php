@@ -65,4 +65,15 @@ class User extends Authenticatable
 
         return $this->hasMany(Submission::class, 'doctor_id')->orWhereNull('doctor_id');
     }
+
+    public function doctor()
+    {
+        return $this->hasRole('Doctor');
+    }
+
+    public function patient()
+    {
+        return $this->hasRole('Patient');
+    }
+
 }

@@ -24,7 +24,7 @@ class SubmissionFactory extends Factory
             'symptoms' => fake()->text,
             'other_info' => fake()->text,
             'phone' => fake()->phoneNumber,
-            'status' => 'inProgress'
+            'status' => 'Pending'
         ];
     }
 }
