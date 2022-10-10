@@ -13,7 +13,7 @@ class AssignSubmissionController
     public function __invoke(Submission $submission): JsonResponse
     {
         $doctor = request()->user();
-        if ($doctor->cannot('update', $submission)) {
+        if ($doctor->cannot('SubmissionIsAssignable', $submission)) {
             abort(403);
         }
 
