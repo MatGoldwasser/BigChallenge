@@ -24,7 +24,7 @@ class DigitalOceanStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'doctorPrescription' => 'required|text',
+            'doctorPrescription' => 'required|mimes:txt',
         ];
     }
 }
