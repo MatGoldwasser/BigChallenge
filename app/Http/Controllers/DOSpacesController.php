@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DigitalOceanDeleteRequest;
 use App\Http\Requests\DigitalOceanStoreRequest;
-use App\Http\Requests\DigitalOceanUpdateRequest;
 use App\Models\Submission;
 use App\Services\CdnService;
+use \Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -19,7 +19,7 @@ class DOSpacesController extends Controller
         $this->cdnService = $cdnService;
     }
 
-    public function store(DigitalOceanStoreRequest $request, Submission $submission)
+    public function store(DigitalOceanStoreRequest $request, Submission $submission):JsonResponse
     {
         $file = $request->file('doctorPrescription');
         $name = (string) Str::uuid();
@@ -32,17 +32,19 @@ class DOSpacesController extends Controller
 
         return response()->json(
             ['message' => 'File uploaded',
-             'url' => Storage::url($fileName)], 200);
+            'url' => Storage::url($fileName)],
+            200
+        );
     }
 
-    public function show(Submission $submission)
+    public function show(Submission $submission): Response
     {
         $fileName = $submission->prescription;
         $folder = config('filesystems.disks.do.folder');
-        $path = $folder .'/'. $fileName;
+        $path = $folder . '/' . $fileName;
         $file = Storage::get($path);
-        if(!$file){
-            return responder()->error()->respond();
+        if (!$file) {
+            return response('No hay prescription');
         }
         $headers = [
             'Content-type' => 'application/txt'
@@ -50,12 +52,12 @@ class DOSpacesController extends Controller
         return response($file, 200, $headers);
     }
 
-    public function delete(Submission $submission)
+    public function delete(Submission $submission): JsonResponse
     {
         $fileName = $submission->prescription;
         $folder = config('filesystems.disks.do.folder');
 
-        $path = $folder .'/'. $fileName;
+        $path = $folder . '/' . $fileName;
 
         Storage::delete($path);
 

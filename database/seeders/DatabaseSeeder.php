@@ -4,9 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Submission;
-use App\Models\User;
 use Illuminate\Database\Seeder;
-use PHP_CodeSniffer\Reports\Summary;
 
 class DatabaseSeeder extends Seeder
 {

@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Http;
 
 class DOCdnService implements CdnService
 {
-
     public function purge($fileName)
     {
         $folder = config('filesystems.do.folder');
