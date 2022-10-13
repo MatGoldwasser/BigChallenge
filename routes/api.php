@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DOSpacesController;
 use App\Http\Controllers\LoginUser\LoginUserController;
 use App\Http\Controllers\LogoutUser\LogoutUserController;
 use App\Http\Controllers\RegisterUser\RegisterUserController;
@@ -36,3 +37,11 @@ Route::post('/submissions', CreateSubmissionController::class)->middleware(['aut
 Route::get('/submissions', GetSubmissionsController::class)->middleware(['auth:sanctum']);
 
 Route::put('/submissions/{submission}', AssignSubmissionController::class)->middleware(['auth:sanctum', 'role:Doctor']);
+
+Route::post('/prescription/{submission}', [DOSpacesController::class, 'store'])->name('upload');//->middleware(['auth:sanctum', 'role:Doctor']);
+
+Route::get('/prescription/{submission}', [DOSpacesController::class, 'show'])->name('download');
+
+Route::delete('/prescription/{submission}', [DOSpacesController::class, 'delete']);
+
+Route::put('/prescription/{submission}', [DOSpacesController::class, 'update']);

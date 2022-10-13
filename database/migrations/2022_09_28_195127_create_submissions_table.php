@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('other_info');
             $table->string('phone');
             $table->string('status');
+            $table->string('prescription')->nullable();
             $table->timestamps();
         });
     }

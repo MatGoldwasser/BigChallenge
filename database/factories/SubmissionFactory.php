@@ -24,7 +24,8 @@ class SubmissionFactory extends Factory
             'symptoms' => fake()->text,
             'other_info' => fake()->text,
             'phone' => fake()->phoneNumber,
-            'status' => 'Pending'
+            'status' => 'Pending',
+            'prescription' => null
         ];
     }
 }

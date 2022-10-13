@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\User;
+use App\Models\Submission;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Submission::factory(10)->create();
         $this->call([PermissionSeeder::class]);
          //User::factory(10)->create();
 

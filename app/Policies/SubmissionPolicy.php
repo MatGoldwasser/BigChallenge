@@ -19,7 +19,7 @@ class SubmissionPolicy
      *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function SubmissionIsAssignable(User $user, Submission $submission):Response
+    public function SubmissionIsAssignable(User $user, Submission $submission): Response
     {
             return $user->isDoctor() && ($submission->doctor_id == $user->id || $submission->doctor_id == null)
                 ? Response::allow()
