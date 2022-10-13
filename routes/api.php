@@ -38,8 +38,10 @@ Route::get('/submissions', GetSubmissionsController::class)->middleware(['auth:s
 
 Route::put('/submissions/{submission}', AssignSubmissionController::class)->middleware(['auth:sanctum', 'role:Doctor']);
 
-Route::post('/prescription', [DOSpacesController::class, 'store']);//->middleware(['auth:sanctum', 'role:Doctor']);
+Route::post('/prescription/{submission}', [DOSpacesController::class, 'store'])->name('upload');//->middleware(['auth:sanctum', 'role:Doctor']);
 
-Route::delete('/prescription', [DOSpacesController::class, 'delete']);
+Route::get('/prescription/{submission}', [DOSpacesController::class, 'show'])->name('download');
 
-Route::put('/prescription', [DOSpacesController::class, 'update']);
+Route::delete('/prescription/{submission}', [DOSpacesController::class, 'delete']);
+
+Route::put('/prescription/{submission}', [DOSpacesController::class, 'update']);

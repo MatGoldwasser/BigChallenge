@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DigitalOceanDeleteRequest;
 use App\Http\Requests\DigitalOceanStoreRequest;
 use App\Http\Requests\DigitalOceanUpdateRequest;
+use App\Models\Submission;
 use App\Services\CdnService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -18,45 +19,46 @@ class DOSpacesController extends Controller
         $this->cdnService = $cdnService;
     }
 
-    public function store(DigitalOceanStoreRequest $request)
+    public function store(DigitalOceanStoreRequest $request, Submission $submission)
     {
         $file = $request->file('doctorPrescription');
-        $fileName = (string) Str::uuid();
+        $name = (string) Str::uuid();
+        $fileName = $name . '.txt';
+        $submission->prescription = $fileName;
+        $submission->save();
         $folder = config('filesystems.disks.do.folder');
 
-        Storage::put(
-            "{$folder}/{$fileName}",
-            file_get_contents($file)
-        );
+        Storage::putFileAs($folder, $file, $fileName, 'public');
 
         return response()->json(
             ['message' => 'File uploaded',
              'url' => Storage::url($fileName)], 200);
     }
 
-    public function delete(DigitalOceanDeleteRequest $request)
+    public function show(Submission $submission)
     {
-        $fileName = $request->validated()['doctorPrescriptionName'];
+        $fileName = $submission->prescription;
         $folder = config('filesystems.disks.do.folder');
-
-        Storage::delete("{$folder}/{$fileName}");
-        $this->cdnService->purge($fileName);
-
-        return response()->json(['message' => 'File deleted'], 200);
+        $path = $folder .'/'. $fileName;
+        $file = Storage::get($path);
+        if(!$file){
+            return responder()->error()->respond();
+        }
+        $headers = [
+            'Content-type' => 'application/txt'
+        ];
+        return response($file, 200, $headers);
     }
 
-    public function update(DigitalOceanUpdateRequest $request)
+    public function delete(Submission $submission)
     {
-        $file = $request->file('doctorPrescription');
-        $fileName = $request->validated()['doctorPrescriptionName'];
+        $fileName = $submission->prescription;
         $folder = config('filesystems.disks.do.folder');
 
-        Storage::put(
-            "{$folder}/{$fileName}",
-            file_get_contents($file)
-        );
-        $this->cdnService->purge($fileName);
+        $path = $folder .'/'. $fileName;
 
-        return response()->json(['message' => 'File updated'], 200);
+        Storage::delete($path);
+
+        return response()->json(['message' => 'File deleted'], 200);
     }
 }
