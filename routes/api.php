@@ -6,6 +6,7 @@ use App\Http\Controllers\LogoutUser\LogoutUserController;
 use App\Http\Controllers\RegisterUser\RegisterUserController;
 use App\Http\Controllers\Submissions\AssignSubmissionController;
 use App\Http\Controllers\Submissions\CreateSubmissionController;
+use App\Http\Controllers\Submissions\GetASubmissionController;
 use App\Http\Controllers\Submissions\GetSubmissionsController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,12 +37,12 @@ Route::post('/submissions', CreateSubmissionController::class)->middleware(['aut
 
 Route::get('/submissions', GetSubmissionsController::class)->middleware(['auth:sanctum']);
 
-Route::put('/submissions/{submission}', AssignSubmissionController::class)->middleware(['auth:sanctum', 'role:Doctor']);
+Route::get('/submissions/{submission}', GetASubmissionController::class);
+
+Route::put('/submissions/{submission}', AssignSubmissionController::class);//->middleware(['auth:sanctum', 'role:Doctor']);
 
 Route::post('/prescription/{submission}', [DOSpacesController::class, 'store'])->name('upload');//->middleware(['auth:sanctum', 'role:Doctor']);
 
-Route::get('/prescription/{submission}', [DOSpacesController::class, 'show'])->name('download');
+Route::get('/prescription/{submission}', [DOSpacesController::class, 'show'])->name('download');//->middleware(['auth:sanctum']);
 
-Route::delete('/prescription/{submission}', [DOSpacesController::class, 'delete']);
-
-Route::put('/prescription/{submission}', [DOSpacesController::class, 'update']);
+Route::delete('/prescription/{submission}', [DOSpacesController::class, 'delete']);//->middleware(['auth:sanctum', 'role:Doctor']);

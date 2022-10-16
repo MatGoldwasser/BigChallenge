@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DigitalOceanStoreRequest;
 use App\Models\Submission;
+use App\Models\User;
+use App\Notifications\SubmissionIssued;
 use App\Services\CdnService;
 use \Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
@@ -29,6 +31,10 @@ class DOSpacesController extends Controller
         $folder = config('filesystems.disks.do.folder');
 
         Storage::putFileAs($folder, $file, $fileName, 'public');
+
+        //aca tengo que agarrar el patient de la submission y mandarle un mail
+        $patient = $submission->patient();
+        $patient->notify(new SubmissionIssued());
 
         return response()->json(
             ['message' => 'File uploaded',
