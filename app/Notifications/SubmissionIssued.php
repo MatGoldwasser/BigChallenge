@@ -10,15 +10,6 @@ class SubmissionIssued extends Notification
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * Get the notification's delivery channels.
@@ -42,8 +33,7 @@ class SubmissionIssued extends Notification
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage())
-                    ->line('Your prescription has been uploaded!')
-                    ->action('Notification Action', url('/'));
+                    ->line('Your prescription has been uploaded!');
     }
 
     /**
