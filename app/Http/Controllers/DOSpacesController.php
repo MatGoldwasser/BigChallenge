@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DigitalOceanStoreRequest;
 use App\Models\Submission;
-use App\Models\User;
 use App\Notifications\SubmissionIssued;
 use App\Services\CdnService;
-use App\Events\DoctorResponse;
-use \Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -23,7 +20,7 @@ class DOSpacesController extends Controller
         $this->cdnService = $cdnService;
     }
 
-    public function store(DigitalOceanStoreRequest $request, Submission $submission):JsonResponse
+    public function store(DigitalOceanStoreRequest $request, Submission $submission): JsonResponse
     {
         $file = $request->file('doctorPrescription');
         $name = (string) Str::uuid();
