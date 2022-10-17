@@ -12,6 +12,6 @@ class GetASubmissionController extends Controller
 
     public function __invoke(Submission $submission):JsonResponse
     {
-        return responder()->success($submission)->respond();
+        return responder()->success(Submission::find($submission))->respond();
     }
 }

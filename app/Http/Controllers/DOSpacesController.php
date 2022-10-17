@@ -7,8 +7,10 @@ use App\Models\Submission;
 use App\Models\User;
 use App\Notifications\SubmissionIssued;
 use App\Services\CdnService;
+use App\Events\DoctorResponse;
 use \Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -32,8 +34,8 @@ class DOSpacesController extends Controller
 
         Storage::putFileAs($folder, $file, $fileName, 'public');
 
-        //aca tengo que agarrar el patient de la submission y mandarle un mail
-        $patient = $submission->patient();
+
+        $patient = $submission->patient;
         $patient->notify(new SubmissionIssued());
 
         return response()->json(
