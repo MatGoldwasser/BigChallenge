@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DigitalOceanStoreRequest;
 use App\Models\Submission;
+use App\Notifications\SubmissionIssued;
 use App\Services\CdnService;
-use \Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -19,7 +20,7 @@ class DOSpacesController extends Controller
         $this->cdnService = $cdnService;
     }
 
-    public function store(DigitalOceanStoreRequest $request, Submission $submission):JsonResponse
+    public function store(DigitalOceanStoreRequest $request, Submission $submission): JsonResponse
     {
         $file = $request->file('doctorPrescription');
         $name = (string) Str::uuid();
@@ -29,6 +30,10 @@ class DOSpacesController extends Controller
         $folder = config('filesystems.disks.do.folder');
 
         Storage::putFileAs($folder, $file, $fileName, 'public');
+
+
+        $patient = $submission->patient;
+        $patient->notify(new SubmissionIssued());
 
         return response()->json(
             ['message' => 'File uploaded',
